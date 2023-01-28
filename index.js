@@ -77,8 +77,6 @@ app.get("/books/:bookId/", authenticateToken, async (request, response) => {
         const book = await db.get(getBookQuery);
         response.send(book);
     });
-  }
-});
 
 // User Register API
 app.post("/users/", async (request, response) => {
