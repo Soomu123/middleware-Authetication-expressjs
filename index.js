@@ -64,20 +64,7 @@ app.get("/books/", authenticateToken, async (request, response) => {
 });
 
 //Get Book API
-app.get("/books/:bookId/", authenticateToken, async (request, response) => {
-  let jwtToken;
-  const authHeader = request.headers["authorization"];
-  if (authHeader !== undefined) {
-    jwtToken = authHeader.split(" ")[1];
-  }
-  if (jwtToken === undefined) {
-    response.status(401);
-    response.send("Invalid Access Token");
-  } else {
-    jwt.verify(jwtToken, "qwerty", async (error, payload) => {
-      if (error) {
-        response.send("Invalid Access Token");
-      } else {
+app.get("/books/:bookId/", authenticateToken, async (request, response) => {  
         const { bookId } = request.params;
         const getBookQuery = `
       SELECT
@@ -89,7 +76,6 @@ app.get("/books/:bookId/", authenticateToken, async (request, response) => {
     `;
         const book = await db.get(getBookQuery);
         response.send(book);
-      }
     });
   }
 });
